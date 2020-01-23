@@ -33,17 +33,12 @@ namespace WhatsAppArchiveReader
 
         public static string ExtractDate(string strWithDate)
         {
-            string DayOfWeek = CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(
-                Convert.ToDateTime(strWithDate.Substring(0, dateTimeLenght)).DayOfWeek);
+            var dateTime = Convert.ToDateTime(strWithDate.Substring(0, dateTimeLenght));
+            var format = CultureInfo.CurrentCulture.DateTimeFormat;
+            var dayOfWeek = format.GetDayName(dateTime.DayOfWeek);
+            var month = format.GetAbbreviatedMonthName(dateTime.Month);
 
-            int Day = Convert.ToDateTime(strWithDate.Substring(0, dateTimeLenght)).Day;
-
-            string Month = CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(
-                    Convert.ToDateTime(strWithDate.Substring(0, dateTimeLenght)).Month);
-
-            int Year = Convert.ToDateTime(strWithDate.Substring(0, dateTimeLenght)).Year;
-
-            return ' ' + DayOfWeek + ", " + Day + ' ' + Month + ' ' + Year + " \n";
+            return $" {dayOfWeek}, {dateTime.Day} {month} {dateTime.Year} \n";
         }
         
         public static string ExtractMessage(string strWithMessage)
